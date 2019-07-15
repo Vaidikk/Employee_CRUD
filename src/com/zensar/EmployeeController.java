@@ -19,13 +19,18 @@ public class EmployeeController extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		String urlViewAll = "/employee_crud/getAllEmployees";
 		String urlUpdate = "/employee_crud/updateEmployee";
+		String urlDelete = "/employee_crud/deleteEmployee";
+		String urlAdd = "/employee_crud/addEmployee";
 		session = request.getSession();
-//			addEmployee(request, response);
 		System.out.println(request.getRequestURI());
 		if(request.getRequestURI().equals(urlViewAll))
 			viewAllEmployees(request, response);
 		else if(request.getRequestURI().equals(urlUpdate))
 			updateEmployee(request, response);
+		else if(request.getRequestURI().equals(urlDelete))
+			deleteEmployee(request, response);
+		else if(request.getRequestURI().equals(urlAdd))
+			addEmployee(request, response);
 		
 	}
 	
@@ -37,7 +42,6 @@ public class EmployeeController extends HttpServlet{
 			
 			session.setAttribute("employeesList", employeesList);
 			response.sendRedirect("viewAllEmployees.jsp");
-//			deleteEmployee(request, response);
 			
 			
 		} catch (Exception e) {e.printStackTrace();}
@@ -61,6 +65,7 @@ public class EmployeeController extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		viewAllEmployees(request, response);
 	}
 	
 	public void deleteEmployee(HttpServletRequest request, HttpServletResponse response) {
