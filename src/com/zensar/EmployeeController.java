@@ -15,12 +15,17 @@ public class EmployeeController extends HttpServlet{
 	
 	private List<Employee> employeesList;
 	private HttpSession session = null;
-	private RequestDispatcher rd = null;
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
+		String urlViewAll = "/employee_crud/getAllEmployees";
+		String urlUpdate = "/employee_crud/updateEmployee";
 		session = request.getSession();
 //			addEmployee(request, response);
-		viewAllEmployees(request, response);
+		System.out.println(request.getRequestURI());
+		if(request.getRequestURI().equals(urlViewAll))
+			viewAllEmployees(request, response);
+		else if(request.getRequestURI().equals(urlUpdate))
+			updateEmployee(request, response);
 		
 	}
 	
@@ -32,7 +37,6 @@ public class EmployeeController extends HttpServlet{
 			
 			session.setAttribute("employeesList", employeesList);
 			response.sendRedirect("viewAllEmployees.jsp");
-			updateEmployee(request, response);
 //			deleteEmployee(request, response);
 			
 			
@@ -72,25 +76,19 @@ public class EmployeeController extends HttpServlet{
 	}
 	
 	public void updateEmployee(HttpServletRequest request, HttpServletResponse response) {
-		int employeeId = 0;
-		employeeId = Integer.parseInt(request.getParameter("employeeId"));
-		System.out.println("works"+employeeId);
+		int employeeId = Integer.parseInt(request.getParameter("employeeId"));
+		String employeeName = request.getParameter("employeeName");
+		double salary = Double.parseDouble(request.getParameter("salary"));
 		
-		for(Employee employee:employeesList)
-			if(employee.geteId()==employeeId) {
-//				session.setAttribute("employee", employee);
-				System.out.println(employee);
-				break;
-			}
-				
+		EmployeeDAO employeeDAO = new EmployeeDAO();
+		try {
+			employeeDAO.updateEmployee(new Employee(employeeId, employeeName, salary));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-//		EmployeeDAO employeeDAO = new EmployeeDAO();
-//		try {
-//			employeeDAO.updateEmployee(employeeId);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		viewAllEmployees(request, response);
 	}
 
 }

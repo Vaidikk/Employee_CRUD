@@ -1,6 +1,8 @@
 package com.zensar;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
 	
 	private int eId;
 	private String name;

@@ -19,7 +19,7 @@
 			<td> <%=employee.getName() %> </td>
 			<td> <%=employee.getSalary() %> </td>
 			<td> <a href="deleteEmployee?employeeId=<%=employee.geteId() %>">Delete</a></td>
-			<td> <a href="updateEmployee?employeeId=<%=employee.geteId() %>">Update</a></td>
+			<td> <a href="updateEmployee.jsp?employeeId=<%=employee.geteId() %>">Update</a></td>
 		</tr>
 		<%} %>
 	</table>

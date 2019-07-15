@@ -75,12 +75,14 @@ public class EmployeeDAO {
 		return result;
 	}
 	
-	public int updateEmployee(int employeeId) throws Exception {
+	public int updateEmployee(Employee employee) throws Exception {
 		Connection con = createConnection();
-		String sql = "select * from employee where employeeId=?";
+		String sql = "update employee set employeeName = ?, salary = ? where employeeId=?";
 		
 		PreparedStatement pStatement = con.prepareStatement(sql);
-		pStatement.setInt(1, employeeId);
+		pStatement.setString(1, employee.getName());
+		pStatement.setDouble(2, employee.getSalary());
+		pStatement.setInt(3, employee.geteId());
 		int result = pStatement.executeUpdate();
 		return result;
 	}
